@@ -24,52 +24,55 @@
             callback: function() {}
         }, options);
 
-        // actions on window scroll
-        $(window).scroll(function(){
-            // getting data about the viewport
-            var viewport = { 
-                // top position of the scrolling viewport
-                scrollTop: $(window).scrollTop(),
-                // bottom position of the scrolling viewport
-                scrollBottom: $(window).scrollTop() + $(window).height(),
-                // line on the middle of the scrolling viewport
-                middleLine: $(window).scrollTop() + ($(window).height() / 2)
-            };
-            // getting data about the DOM element
-            var element = { 
-                // top position of the DOM element
-                top: that.position().top,
-                // bottom position of the DOM element
-                bottom: that.position().top + that.height(),
-                // finding if the event already was triggered
-                active: that.data('active')
-            }
+        // if there is the element
+        if (that.length) {
+            // actions on window scroll
+            $(window).scroll(function(){
+                // getting data about the viewport
+                var viewport = { 
+                    // top position of the scrolling viewport
+                    scrollTop: $(window).scrollTop(),
+                    // bottom position of the scrolling viewport
+                    scrollBottom: $(window).scrollTop() + $(window).height(),
+                    // line on the middle of the scrolling viewport
+                    middleLine: $(window).scrollTop() + ($(window).height() / 2)
+                };
+                // getting data about the DOM element
+                var element = { 
+                    // top position of the DOM element
+                    top: that.position().top,
+                    // bottom position of the DOM element
+                    bottom: that.position().top + that.height(),
+                    // finding if the event already was triggered
+                    active: that.data('active')
+                }
 
-            // if the event should be triggered based on top line
-            if(settings.line == 'top'){
-                if(viewport.scrollTop >= element.top){
-                    enableElement(element);
-                } else {
-                    disableElement(element);
+                // if the event should be triggered based on top line
+                if(settings.line == 'top'){
+                    if(viewport.scrollTop >= element.top){
+                        enableElement(element);
+                    } else {
+                        disableElement(element);
+                    }
                 }
-            }
-            // if the event should be triggered based on middle line
-            else if(settings.line == 'middle'){
-                if(viewport.middleLine >= element.top && viewport.middleLine <= element.bottom){
-                    enableElement(element);
-                } else {
-                    disableElement(element);
+                // if the event should be triggered based on middle line
+                else if(settings.line == 'middle'){
+                    if(viewport.middleLine >= element.top && viewport.middleLine <= element.bottom){
+                        enableElement(element);
+                    } else {
+                        disableElement(element);
+                    }
                 }
-            }
-            // if the event should be triggered based on bottom line
-            else if(settings.line == 'bottom'){
-                if(viewport.scrollBottom <= element.bottom){
-                    enableElement(element);
-                } else {
-                    disableElement(element);
+                // if the event should be triggered based on bottom line
+                else if(settings.line == 'bottom'){
+                    if(viewport.scrollBottom <= element.bottom){
+                        enableElement(element);
+                    } else {
+                        disableElement(element);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         function enableElement(element){
             // if the event is not triggered yet
